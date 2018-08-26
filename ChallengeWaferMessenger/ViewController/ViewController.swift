@@ -12,13 +12,16 @@ class ViewController: UIViewController {
     
     //to manipulate countries
     var countries:[Country] = []
-    
+    var cellSelected = 0
     @IBOutlet weak var countriesTable: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.automaticallyAdjustsScrollViewInsets = false
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(deleteCell), name: Notification.Name("deleteCell"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(selectedCell), name: Notification.Name("selectedCell"), object: nil)
         
         loadCountry()
     }
@@ -38,6 +41,26 @@ class ViewController: UIViewController {
             print(error.localizedDescription)
         }
     }
+    
+    @objc func deleteCell(notification: NSNotification){
+        if let dict = notification.userInfo as NSDictionary? {
+            if let id = dict["index"] as? IndexPath{
+                countries.remove(at: id.row)
+                countriesTable.deleteRows(at: [id], with: .fade)
+            }
+        }
+    }
+    
+    @objc func selectedCell(notification: NSNotification){
+        if let dict = notification.userInfo as NSDictionary? {
+            if let id = dict["index"] as? IndexPath{
+                if cellSelected != id.row{
+                    countriesTable.reloadRows(at: [id], with: .automatic)
+                    cellSelected = id.row
+                }
+            }
+        }
+    }
 
 }
 
@@ -51,6 +74,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate{
         cell.nameLabel.text = countries[indexPath.row].name
         cell.languageLabel.text = countries[indexPath.row].languages[0].name
         cell.currencyLabel.text = countries[indexPath.row].currencies[0].name
+        cell.index = indexPath
+        
+        print(indexPath)
         
         return cell
     }
@@ -58,6 +84,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 65
     }
+
     
 //    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 //
