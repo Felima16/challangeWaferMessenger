@@ -87,7 +87,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 
-        let delete = UITableViewRowAction(style: .destructive, title: "excluir") { (action, indexPath) in
+        let delete = UITableViewRowAction(style: .destructive, title: "") { (action, indexPath) in
             // delete item at indexPath
             self.countries.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
