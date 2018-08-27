@@ -38,12 +38,12 @@ class CountryCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        xInitialView = cellStackView.layer.position.x
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlerPan(pan:)))
-        cellStackView.addGestureRecognizer(pan)
+//        xInitialView = cellStackView.layer.position.x
+//        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlerPan(pan:)))
+//        cellStackView.addGestureRecognizer(pan)
     }
     
-    override func didMoveToWindow() {
+  /*  override func didMoveToWindow() {
         super.didMoveToWindow()
         //send index to delete on the table
         indexDataDict = ["index": index]
@@ -140,7 +140,7 @@ class CountryCell: UITableViewCell {
             positiveMovementOnAxisPercent = fmax(positiveMovementOnAxis, -1.0)
             return CGFloat(-positiveMovementOnAxisPercent)
         }
-    }
+    }*/
 }
     
 
